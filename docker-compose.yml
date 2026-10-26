@@ -1,0 +1,45 @@
+services:
+  db:
+    image: postgres:18
+    container_name: sales-db
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: sales
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata_sales:/var/lib/postgresql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d sales -h localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  api:
+    build: ./app
+    container_name: sales-api
+    environment:
+      DATABASE_URL: postgresql+psycopg2://postgres:password@db:5432/sales
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  metabase:
+    image: metabase/metabase
+    container_name: sales-metabase
+    environment:
+      MB_DB_FILE: /metabase-data/metabase.db
+    ports:
+      - "3000:3000"
+    volumes:
+      - metabase_data:/metabase-data
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata_sales:
+  metabase_data:
