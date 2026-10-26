@@ -77,6 +77,7 @@ Create questions with SQL and add them to a dashboard.
 Monthly sales
 Top 10 products by revenue
 Top employees by sales
+
 //What I Learned
 
 Running multiple services with Docker Compose
