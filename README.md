@@ -82,7 +82,7 @@ Top employees by sales
 
 Running multiple services with Docker Compose
 Docker images, containers, volumes and networks
-Connecting an API to PostgreSQL (actually this from ai)
+Connecting an API to PostgreSQL (actually this APIs from ai)
 Writing SQL (JOIN, GROUP BY, aggregations)
 Building dashboards with Metabase
 
